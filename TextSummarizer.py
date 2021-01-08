@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[176]:
+# In[13]:
 
 
 import nltk
@@ -11,13 +11,13 @@ from nltk.corpus import stopwords
 #import networkx as nx  #for similarity graphs
 
 
-# In[177]:
+# In[14]:
 
 
 import os
 
 
-# In[178]:
+# In[42]:
 
 
 def read_feedback(file):
@@ -29,44 +29,44 @@ def read_feedback(file):
         print("Please check file path!")
 
 
-# In[179]:
+# In[16]:
 
 
 from gensim.summarization.summarizer import summarize
 
 
-# In[180]:
+# In[17]:
 
 
 from gensim.summarization import keywords
 
 
-# In[181]:
+# In[18]:
 
 
 from textblob import TextBlob
 
 
-# In[182]:
+# In[19]:
 
 
 file_path = input("Please enter file path: ")
 file_reader = read_feedback(file_path)
 
 
-# In[183]:
+# In[20]:
 
 
 file_reader
 
 
-# In[184]:
+# In[21]:
 
 
 file_blob = TextBlob(file_reader)
 
 
-# In[185]:
+# In[22]:
 
 
 def translator(blob):
@@ -77,89 +77,101 @@ def translator(blob):
             
 
 
-# In[186]:
+# In[23]:
 
 
 en_blob = translator(file_blob)
 
 
-# In[200]:
+# In[24]:
 
 
 en_blob.sentiment.polarity
 
 
-# In[201]:
+# In[25]:
 
 
 en_blob.sentiment.subjectivity
 
 
-# In[187]:
+# In[26]:
 
 
 en_file = en_blob.string
 
 
-# In[188]:
+# In[27]:
 
 
 file_summary = summarize(en_file,ratio = 0.3)   #summary is 30% of the original text.
 #print(editorial_summary)
 
 
-# In[189]:
+# In[28]:
 
 
 #print(keywords(file_summary,lemmatize=True))
 
 
-# In[190]:
+# In[29]:
 
 
 import docx
 
 
-# In[191]:
+# In[30]:
 
 
 from docx import Document
 
 
-# In[192]:
+# In[31]:
 
 
 response = Document()
 
 
-# In[193]:
+# In[32]:
 
 
 response.add_heading('Summary', 0)
 
 
-# In[194]:
+# In[33]:
 
 
 response.add_paragraph(file_summary)
 
 
-# In[195]:
+# In[34]:
 
 
 #%pwd
 
 
-# In[196]:
+# In[35]:
 
 
-name_of_file = input("Please enter the file name to save the summary here: ")
+path_to_save = input("Please enter location where you want to save the file: ")
 
 
-# In[197]:
+# In[36]:
 
 
-response.save('{}.docx'.format(name_of_file))
+os.chdir(path_to_save)  
+
+
+# In[37]:
+
+
+name_of_summary_file = input("Please enter summary file name")
+
+
+# In[38]:
+
+
+response.save('{}.docx'.format(name_of_summary_file))
 
 
 # In[ ]:
